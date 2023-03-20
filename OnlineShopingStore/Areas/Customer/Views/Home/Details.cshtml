@@ -1,0 +1,146 @@
+﻿@model OnlineShopingStore.Models.Products
+@{
+    ViewData["Title"] = "Details";
+}
+@using OnlineShopingStore.Utilty
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+
+    List<Products> products = HttpContextAccessor.HttpContext.Session.Get<List<Products>>("products");
+    Products product = null;
+    if (products != null)
+    {
+        product = products.FirstOrDefault(c => c.Id == Model.Id);
+    }
+
+}
+
+<h1>Product Details</h1>
+<form asp-action="Details" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+        </div>
+        <input type="hidden" asp-for="@Model.Id" />
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Name"></label>
+                </div>
+
+                <div class="col-8">
+                    <input asp-for="Name" readonly="readonly" class="form-control">
+                </div>
+
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Price"></label>
+                </div>
+
+                <div class="col-8">
+                    <input asp-for="Price" readonly="readonly" class="form-control">
+                </div>
+
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ProductColor"></label>
+                </div>
+
+                <div class="col-4">
+                    <input asp-for="ProductColor" readonly="readonly" class="form-control">
+                </div>
+
+                <span asp-validation-for="ProductColor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ProductTypeId"></label>
+                </div>
+
+                <div class="col-4">
+                    <input type="text" value="@ViewBag.ProductTypeType" readonly="readonly" class="form-control">
+
+                </div>
+
+                <span asp-validation-for="ProductTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="SpecialTagId"></label>
+                </div>
+
+                <div class="col-4">
+                    @*<input asp-for="SpecialTagId" class="form-control">*@
+                    <input type="text" value=" @ViewBag.SpecialType " readonly="readonly" class="form-control">
+                    @*<select asp-for="SpecialTagId" readonly="readonly" asp-items="  ViewBag.SepcialTagID"></select>*@
+                </div>
+
+                <span asp-validation-for="SpecialTagId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="IsAvailable"></label>
+                </div>
+
+                <div class="col-4">
+                    <input asp-for="IsAvailable" disabled="disabled" type="checkbox">
+                </div>
+
+                <span asp-validation-for="IsAvailable" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+
+                </div>
+
+                <div class="col-4">
+                    @if (product != null)
+                    {
+                        <button type="submit" class="btn btn-danger form-control" asp-action="Remove" asp-route-id="@Model.Id">Remove fro Cart</button>
+
+                    }
+                    else if (Model.IsAvailable==false)
+                    {
+                        <h6>Un Available Now</h6>
+                        <input type="submit" style="display:none" class="btn btn-info" value="Add To Cart" />
+
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-info" value="Add To Cart" />
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-success" asp-action="Index"> Back To List</a>
+                @*<input type="submit" class="btn btn-primary" value=" submit" />*@
+            </div>
+        </div>
+        <div class="col-3">
+            <img src="~/Images/@Model.Image" style="border-image-repeat:round;border:1px solid #efefef" class="float-left" alt="" width="304" height="236">
+            @if (Model.IsAvailable)
+            {
+                <img src="~/Images/Instock.png" style="width:100px; height:50px" />
+            }
+            else
+            {
+                <img src="~/Images/out of stock.PNG" style="width:100px; height:50px" />
+            }
+        </div>
+
+        <div class="col-1">
+
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

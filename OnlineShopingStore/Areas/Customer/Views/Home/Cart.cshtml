@@ -1,0 +1,51 @@
+﻿@model IEnumerable<OnlineShopingStore.Models.Products>
+@{ 
+    ViewData["Title"] = "Cart";
+}
+<h1>Your Cart</h1>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Product Type</th>
+                <th>Color</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+             
+                <tr>
+
+                    <td><img src="~/Images/@item.Image"style="width:100px;height:200px;" /></td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.ProductTypes.Producttype</td>
+                    <td>@item.ProductColor</td>
+                    <td>
+                        
+                        <a asp-action="Remove" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">Remove From Cart</a>
+                    </td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row>">
+    <div class="col-6">
+        <a asp-action="Index" asp-controller="Home"class="btn btn-success" >Back to Home</a>
+
+    </div>
+    <div class="col-6 text-md-right">
+        <h3>Total Amount</h3>
+        <h3>Grant Total: @Model.Sum(p=>p.Price)</h3>
+        <a asp-action="Chechout" asp-controller="Order" asp-area="Customer"class="btn btn-info">Process to CheckOut</a>
+    </div>
+</div>

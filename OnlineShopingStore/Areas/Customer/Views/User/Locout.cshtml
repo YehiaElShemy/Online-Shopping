@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Lockout";
+}
+
+<h1> Are Sure to Lockout User</h1>
+<form asp-action="Locout" id="user-Form" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" value="Id" />
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label>UserName</label>
+        </div>
+
+        <div col-5>
+            <input name="UserName" value="@ViewBag.UserName" class="form-control" readonly="readonly">
+
+        </div>
+
+
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label>Email</label>
+        </div>
+
+        <div col-5>
+            <input name="Email" value="@ViewBag.Email" class="form-control" readonly="readonly">
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Lockout">
+        <a class="btn btn-success" asp-action="Index" asp-controller="User" asp-area="Customer"> Back To List</a>
+    </div>
+
+
+</form>
+
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");}
+    <script>
+    $(document).ready(function(){
+        $("#user-Form").validate({
+            rules: {
+                UserName: {
+                    required: true,
+                }
+            }
+        });});
+    </script>
+}

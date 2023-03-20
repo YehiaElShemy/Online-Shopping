@@ -1,0 +1,90 @@
+﻿
+<br />
+<br />
+<div class="row ">
+    <div class="Col-6">
+        <h2 class=" text-info">User List</h2>
+    </div>
+    <div class="Col-6  btn-lg float-right">
+        <a asp-action="Create" asp-controller="User" asp-area="Customer" class="btn btn-info ">&nbsp; Add New User</a>
+    </div>
+    <div class="Col-6  btn-lg float-right">
+        <a asp-action="AddAdmin" asp-controller="User" asp-area="Customer" class="btn btn-info ">&nbsp; Add New Admin</a>
+    </div>
+</div>
+<div>
+    <table class="table table-striped " id="myTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>User Name</th>
+                <th>Status</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Users)
+            {
+            <tr>
+
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                @if (item.LockoutEnd > DateTime.Now && item.LockoutEnd != null)
+                {
+                    <td>Inactive</td>
+                    <td >
+                        <div class="btn-group">
+                            <a asp-action="Active" asp-route-id="@item.Id" class="btn btn-primary">Active</a>
+                            
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
+                }
+                else
+                {
+                    <td>Active</td>
+                    <td><partial name="_partialViewUser" model="@item.Id" /></td>
+                }
+            </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+
+@*script src="~/js/DataTable_file.js"></script>*@
+
+@section Scripts{
+    <script src="~/js/DataTable_file.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#myTable").DataTable();
+        });
+        $(function () {
+            var Save = '@TempData["Save"]'
+            console.log(Save)
+            if (Save != '') {
+                alertify.success(Save)
+            }
+            var Edit = '@TempData["update"]'
+            console.log(Edit)
+            if (Edit != '') {
+                alertify.message(Edit)
+            }
+            var Active = '@TempData["Active"]'
+            console.log(Active)
+            if (Edit != '') {
+                alertify.Active(Active)
+            }
+            var Remove = '@TempData["Remove"]'
+            console.log(Remove)
+            if (Remove != '') {
+                alertify.error(Remove)
+            }
+        })
+    </script> @{await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
+

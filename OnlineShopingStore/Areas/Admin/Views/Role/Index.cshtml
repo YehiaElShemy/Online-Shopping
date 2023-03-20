@@ -1,0 +1,76 @@
+﻿
+<br />
+<br />
+<div class="row ">
+    <div class="Col-6">
+        <h2 class=" text-info">Assign User Role</h2>
+    </div>
+    <div class="Col-6  btn-lg float-right">
+        <a asp-action="Create" asp-controller="Role" asp-area="Admin" class="btn btn-info ">&nbsp; Add New Role</a>
+    </div>
+</div>
+<div>
+    <table class="table table-striped " id="myTable">
+        <thead>
+            <tr>
+                <th> User Name</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Roles)
+            {
+                <tr>
+
+                    <td>@item.Name</td>
+                  
+                    <td style="width:150px">
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                            
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
+                   
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+
+@*script src="~/js/DataTable_file.js"></script>*@
+
+@section Scripts{
+    <script src="~/js/DataTable_file.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#myTable").DataTable();
+        });
+        $(function () {
+            var Save = '@TempData["Save"]'
+            console.log(Save)
+            if (Save != '') {
+                alertify.success(Save)
+            }
+            var Edit = '@TempData["update"]'
+            console.log(Edit)
+            if (Edit != '') {
+                alertify.message(Edit)
+            }
+            var Active = '@TempData["Active"]'
+            console.log(Active)
+            if (Edit != '') {
+                alertify.Active(Active)
+            }
+            var Remove = '@TempData["Remove"]'
+            console.log(Remove)
+            if (Remove != '') {
+                alertify.error(Remove)
+            }
+        })
+    </script> @{await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}
+

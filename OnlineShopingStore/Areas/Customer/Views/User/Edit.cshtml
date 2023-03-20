@@ -1,0 +1,62 @@
+﻿
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit User</h1>
+<form asp-action="Edit" id="user-Form" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" value="@ViewBag.Id" />
+  
+    <div class="form-group row">
+        <div class="col-2">
+            <label > UserName</label>
+        </div>
+
+        <div col-5>
+            <input Name="UserName" value="@ViewBag.UserName" class="form-control">
+         
+        </div>
+
+
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label >Email</label>
+        </div>
+
+        <div col-5>
+            <input name="Email"  class="form-control">
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Update">
+        <a class="btn btn-success" asp-action="Index" asp-controller="User" asp-area="Customer"> Back To List</a>
+    </div>
+
+
+</form>
+
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");}
+    <script>
+        $(document).ready(function () {
+            $("#user-Form").validate({
+                rules: {
+                    UserName: {
+                        required: true,
+                    }
+                }
+            });
+        });
+    </script>
+}

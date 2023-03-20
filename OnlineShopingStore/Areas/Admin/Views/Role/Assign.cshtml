@@ -1,0 +1,47 @@
+﻿@model OnlineShopingStore.Areas.Admin.Model.RoleUserVm
+@{
+    ViewData["Title"] = "Assign";
+}
+
+<h1>Assign Role</h1>
+<form asp-action="Assign" asp-controller="Role" asp-area="Admin" method="post" >
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h2>@ViewBag.Mgs</h2>
+   
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="UserId"></label>
+        </div>
+
+        <div col-5>
+            <select asp-for="UserId" asp-items=" ViewBag.UserID" class="form-control"></select>
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+
+       
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="RoleId"></label>
+        </div>
+
+        <div col-5>
+            <select asp-for="RoleId" asp-items="  ViewBag.RoleId" class="form-control"></select>
+            <span asp-validation-for="RoleId" class="text-danger"></span>
+        </div>
+
+        
+    </div>
+        <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Assign">
+        <a class="btn btn-success" asp-action="Index" asp-controller="Role" asp-area="Admin"> Back To List</a>
+    </div>
+
+
+</form>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+    }
+}

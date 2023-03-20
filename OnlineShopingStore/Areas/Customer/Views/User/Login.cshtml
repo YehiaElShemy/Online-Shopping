@@ -1,0 +1,62 @@
+﻿
+@model OnlineShopingStore.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Create New User</h1>
+<form asp-action="Login" id="user-Form" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="UserName"></label>
+        </div>
+
+        <div col-5>
+            <input asp-for="UserName" class="form-control">
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+
+    </div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Password"></label>
+        </div>
+
+        <div col-5>
+            <input asp-for="Password" type="password" class="form-control">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+ 
+      
+
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Save">
+        @*<a class="btn btn-success" asp-action="Index" asp-controller="User" asp-area="Customer"> Back To List</a>*@
+    </div>
+
+
+</form>
+<script src="~/jquery-validate/jquery.validate.js"></script>
+<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");}
+    <script>
+    $(document).ready(function(){
+        $("#user-Form").validate({
+            rules: {
+                UserName: {
+                    required: true,
+                }
+            }
+        });});
+    </script>
+}

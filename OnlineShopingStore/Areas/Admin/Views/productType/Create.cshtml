@@ -1,0 +1,27 @@
+﻿@model OnlineShopingStore.Models.ProductType
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create New Product</h1>
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Producttype"></label>
+        </div>
+
+        <div col-5>
+            <input asp-for="Producttype" class="form-control" type="text">
+        </div>
+
+        <span asp-validation-for="Producttype" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Submit">
+        <a class="btn btn-success" asp-action="Index" asp-controller="ProductType" asp-area="Admin"> Back To List</a>
+    </div>
+
+
+</form>
+
